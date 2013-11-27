@@ -10,7 +10,9 @@ There are three class definitions:
 
   (1) cfigure 	    - Initializes an invisible figure and holds onto its figure 
 		        and axis handles.
+
   (2) FigureHandler - Initializes and stores cfigure instances.
+
   (3) dict  	    - A simple dictionary implementation used by FigureHandler
 			to store the cfigure objects. 
 
