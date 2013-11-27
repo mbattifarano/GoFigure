@@ -6,6 +6,14 @@ Matt Battifarano 2013
 Smart Figures is designed to handle MATLAB figures so that creating, saving,
 and viewing is as simple as possible.
 
+There are three class definitions:
+
+  (1) cfigure 	    - Initializes an invisible figure and holds onto its figure 
+		        and axis handles.
+  (2) FigureHandler - Initializes and stores cfigure instances.
+  (3) dict  	    - A simple dictionary implementation used by FigureHandler
+			to store the cfigure objects. 
+
 Each instance of the class FigureHandler keeps track of the axis and figure
 handles (via the cfigure class) of every figure created by it. Multiple 
 instances of the FigureHandler class can be used to group figures. 
