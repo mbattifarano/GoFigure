@@ -44,6 +44,8 @@ classdef FigureHandler < handle
         function save_mult(obj,path,formats)
             obj.map('save_mult',{path,formats});
         end
+        function close(obj)
+            obj.map('close',{})
+        end
     end
-    
 end

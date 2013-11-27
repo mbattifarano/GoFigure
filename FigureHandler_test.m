@@ -18,9 +18,15 @@ ylabel(FIGS.get_axes('foo'),'y axis');
 
 plot(FIGS.get_axes('bar'),x,sin((pi/10)*x),'k');
 plot(FIGS.get_axes('bar'),x,sin((3*pi/10)*x),'r');
-title(FIGS.get_axes('foo'),'Sinusoids!');
-xlabel(FIGS.get_axes('foo'),'x axis');
-ylabel(FIGS.get_axes('foo'),'y axis');
+title(FIGS.get_axes('bar'),'Sinusoids!');
+xlabel(FIGS.get_axes('bar'),'x axis');
+ylabel(FIGS.get_axes('bar'),'y axis');
+
+FIGS.new('baz')
+plot(FIGS.get_axes('baz'),x,rand(1,length(x)),'k');
 
 FIGS.show()
-FIGS.save('.','fig')
+FIGS.save('./sample_figures','fig')
+
+pause;
+FIGS.close()
