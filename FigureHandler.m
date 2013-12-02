@@ -32,6 +32,12 @@ classdef FigureHandler < handle
             cfig = obj.get_cfig(name);
             figure_handle = cfig.Hfg;
         end
+        function append(obj,cfig_obj)
+            obj.figs.set_value(cfig_obj.name,cfig_obj);
+        end
+        function extend(obj,fighandler)
+            obj.figs.extend(fighandler.figs);
+        end
         function show(obj)
             obj.map('show',{})
         end
