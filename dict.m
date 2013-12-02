@@ -27,5 +27,12 @@ classdef dict < handle
             obj.keys{index}=key;
             obj.values{index}=value;
         end
+        function extend(obj,dict_obj)
+            for i=1:dict_obj.len()
+                key = dict_obj.keys{i};
+                value = dict_obj.values{i};
+                obj.set_value(key,value);
+            end
+        end
     end
 end
