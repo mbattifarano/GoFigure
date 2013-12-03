@@ -1,7 +1,7 @@
 classdef dict < handle
     properties
-        keys = {};
-        values = {};
+        keys = cell(1,0);
+        values = cell(1,0);
     end
     methods
         function N = len(obj)
@@ -32,6 +32,18 @@ classdef dict < handle
                 key = dict_obj.keys{i};
                 value = dict_obj.values{i};
                 obj.set_value(key,value);
+            end
+        end
+        function del(obj,varargin)
+            if isempty(varargin)
+                target_keys=obj.keys;
+            else
+                target_keys=varargin;
+            end
+            for i=1:length(target_keys)
+                index=obj.find_key(target_keys{i});
+                obj.keys(index)=[];
+                obj.values(index)=[];
             end
         end
     end
