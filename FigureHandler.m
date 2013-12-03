@@ -7,9 +7,12 @@ classdef FigureHandler < handle
             fig = cfigure(name);
             obj.figs.set_value(name,fig);
         end
-        function map(obj,fn,args)
-            for i=1:obj.figs.len
-                h = obj.figs.values{i};
+        function map(obj,target_keys,fn,args)
+            if isempty(target_keys)
+                target_keys=obj.figs.keys;
+            end
+            for i=1:length(target_keys)
+                h = obj.figs.get_value(target_keys{i});
                 %disp(obj.figs.keys{i});
                 h.(fn)(args{:})
             end
@@ -38,20 +41,22 @@ classdef FigureHandler < handle
         function extend(obj,fighandler)
             obj.figs.extend(fighandler.figs);
         end
-        function show(obj)
-            obj.map('show',{})
+        % extensions of cfig methods
+        function show(obj,varargin)
+            obj.map(varargin,'show',{})
         end
-        function hide(obj)
-            obj.map('hide',{})
+        function hide(obj,varargin)
+            obj.map(varargin,'hide',{})
         end
-        function save(obj,path,format)
-            obj.map('save',{path,format});
+        function save(obj,path,format,varargin)
+            obj.map(varargin,'save',{path,format});
         end
-        function save_mult(obj,path,formats)
-            obj.map('save_mult',{path,formats});
+        function save_mult(obj,path,formats,varargin)
+            obj.map(varargin,'save_mult',{path,formats});
         end
-        function close(obj)
-            obj.map('close',{})
+        function close(obj,varargin)
+            obj.map(varargin,'close',{})
+            obj.figs.del(varargin);
         end
     end
 end
