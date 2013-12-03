@@ -9,7 +9,11 @@ classdef dict < handle
         end
         function index = find_key(obj,name)
             cellfind=@(string)(@(el)(strcmp(string,el)));
+            try
             index=find(cellfun(cellfind(name),obj.keys));
+            catch
+                keyboard
+            end
         end 
         function TF = is_key(obj,name)
             TF = ~isempty(obj.find_key(name));
@@ -35,7 +39,7 @@ classdef dict < handle
             end
         end
         function del(obj,varargin)
-            if isempty(varargin)
+            if isempty(varargin{:})
                 target_keys=obj.keys;
             else
                 target_keys=varargin;
