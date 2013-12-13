@@ -3,8 +3,11 @@ classdef FigureHandler < handle
         figs = dict;
     end
     methods
-        function new(obj,name)
-            fig = cfigure(name);
+        function new(obj,name,profile)
+            if nargin == 2
+                profile = 'default';
+            end
+            fig = cfigure(name,profile);
             obj.figs.set_value(name,fig);
         end
         function map(obj,target_keys,fn,args)
