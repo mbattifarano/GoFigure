@@ -3,12 +3,26 @@ classdef cfigure
        Hfg
        Hax
        name
+       prop
     end
     methods
-        function fig_obj = cfigure(name)
-            fig_obj.Hfg  = figure('visible','off','name',name,'NumberTitle','off');
+        function fig_obj = cfigure(name,profile)
+            if nargin == 1
+                profile = 'default';
+            end
+            fig_init     = struct('Visible'     , 'off' , ...
+                                  'Name'        , name  , ...
+                                  'NumberTitle' , 'off' );
+            init_fields  = fieldnames(fig_init);
+            fig_obj.Hfg  = figure(fig_init);
             fig_obj.Hax  = axes;
             fig_obj.name = name;
+            fig_obj.prop = PropertyHandler(init_fields,profile);
+            
+            set(fig_obj.Hfg,fig_obj.prop.figure);
+            disp(fig_obj.prop.axes)
+            set(fig_obj.Hax,fig_obj.prop.axes);
+
             hold on
         end
         function string = get_title(obj)
