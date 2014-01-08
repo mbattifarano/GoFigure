@@ -15,8 +15,11 @@ There are three class definitions:
 
   (3) PropertyHandler - Stores Axis and Figure properties.
 
-  (3) dict  	      - A simple dictionary implementation used by 
-                        FigureHandler to store the cfigure objects.
+  (3) Dictionary  	  - A simple dictionary implementation written by
+                        Daniel Wirtz (http://www.mathworks.com/matlabcentral/fileexchange/33901-dictionary-data-structure/content/Dictionary.m)
+                        used by FigureHandler to store the cfigure objects.
+                        I have added public functions to list the keys and 
+                        values.
 
 Each instance of the class FigureHandler keeps track of the axis and figure
 handles (via the cfigure class) of every figure created by it. Multiple 
