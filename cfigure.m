@@ -1,26 +1,27 @@
-classdef cfigure
+classdef cfigure 
     properties
        Hfg
        Hax
        name
        prop
+       exists
     end
     methods
         function fig_obj = cfigure(name,profile)
             if nargin == 1
-                profile = 'default';
+                profile  = 'default';
             end
             fig_init     = struct('Visible'     , 'off' , ...
                                   'Name'        , name  , ...
                                   'NumberTitle' , 'off' );
-            init_fields  = fieldnames(fig_init);
-            fig_obj.Hfg  = figure(fig_init);
+            init_fields    = fieldnames(fig_init);
+            fig_obj.Hfg    = figure(fig_init);
+            fig_obj.exists = true;
             fig_obj.Hax  = axes;
             fig_obj.name = name;
             fig_obj.prop = PropertyHandler(init_fields,profile);
             
             set(fig_obj.Hfg,fig_obj.prop.figure);
-            disp(fig_obj.prop.axes)
             set(fig_obj.Hax,fig_obj.prop.axes);
 
             hold on
