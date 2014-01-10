@@ -1,7 +1,8 @@
-SMART FIGURES
+GoFigure!
 =============
 
-Matt Battifarano 2013
+Matt Battifarano 
+2013
 
 Smart Figures is designed to handle MATLAB figures so that creating, 
 saving, and viewing is as simple as possible.
