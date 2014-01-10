@@ -4,8 +4,8 @@ GoFigure!
 Matt Battifarano 
 2013
 
-Smart Figures is designed to handle MATLAB figures so that creating, 
-saving, and viewing is as simple as possible.
+GoFigure! is designed to handle MATLAB figures so that creating, 
+saving, and viewing is as simple and organized as possible.
 
 There are three class definitions:
 
@@ -26,7 +26,7 @@ Each instance of the class FigureHandler keeps track of the axis and figure
 handles (via the cfigure class) of every figure created by it. Multiple 
 instances of the FigureHandler class can be used to group figures. 
 
-Most importantly, figures created by a FigureHandler instance
+Most importantly, figures created as a cfigure instance
 are created silently, that is, they are initialized with the 'visible' 
 property set to 'off'. This means that figures will NOT steal focus when 
 they are created. Since each instance of FigureHandler keeps tabs on all 
@@ -53,7 +53,7 @@ Importantly, the PropertyHandler class allows one to create `profiles' of
 frequently used settings. These are stored as mat files in the profiles 
 directory. Each mat file contains figure and axis property structs. 
 'default.mat' is the MATLAB default. 'presentation.mat' is an example of my
-own design'.
+own design.
 
 Further improvements may include more robust handling of properties. There 
 are a number of properties beyond figure and axis properties (axis label 
@@ -63,6 +63,7 @@ PropertyHandler.
 Additionally, FigureHandler is not aware when or how the user interacts 
 with the figure via the GUI. This is problematic when the user closes the 
 figure becuase the FigureHandler currently has no way of knowing that the
-figure has been closed. This problem in particular can probably be solve by
-specifying an appropriate DeleteFcn property. However, it would also be 
-nice to more robustly treat user interactions.
+figure has been closed and is still storing the now-invalid handles.
+This problem in particular can probably be solved by specifying an appropriate
+DeleteFcn property. However, it would also be nice to more robustly treat user
+interactions.
