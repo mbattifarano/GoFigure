@@ -1,45 +1,67 @@
+% FigureHandler Demo script
 close all;clear all
-FIGS=FigureHandler;
+
+% create two figure handler objects
+% this one will contain figures with default properties/formatting
+these_figs=FigureHandler;
+% this one will contain figures for a presentation with slighly nicer
+% formatting: a white background, out-facing tick marks.
+other_figs=FigureHandler('presentation');
 
 % create new figures (silently!)
-FIGS.new('bar')
-FIGS.new('foo')
+these_figs.new('bar')
+these_figs.new('foo')
+other_figs.new('fancy!')
+other_figs.new('yay formatting!')
 
 x=-10:0.1:10;
 
 % list figures
-FIGS.whos();
+these_figs.whos();
 
 % plot to figure axes (nothing special here)
-plot(FIGS.get_axes('foo'),x,x.^3,'r');
-plot(FIGS.get_axes('foo'),x,x.^2,'b');
-title(FIGS.get_axes('foo'),'Polynomials!')
-xlabel(FIGS.get_axes('foo'),'x axis');
-ylabel(FIGS.get_axes('foo'),'y axis');
+plot(these_figs.get_axes('foo'),x,x.^3,'r');
+plot(these_figs.get_axes('foo'),x,x.^2,'b');
+title(these_figs.get_axes('foo'),'Polynomials!')
+xlabel(these_figs.get_axes('foo'),'x axis');
+ylabel(these_figs.get_axes('foo'),'y axis');
 
-plot(FIGS.get_axes('bar'),x,sin((pi/10)*x),'k');
-plot(FIGS.get_axes('bar'),x,sin((3*pi/10)*x),'r');
-title(FIGS.get_axes('bar'),'Sinusoids!');
-xlabel(FIGS.get_axes('bar'),'x axis');
-ylabel(FIGS.get_axes('bar'),'y axis');
+plot(these_figs.get_axes('bar'),x,sin((pi/10)*x),'k');
+plot(these_figs.get_axes('bar'),x,sin((3*pi/10)*x),'r');
+title(these_figs.get_axes('bar'),'Sinusoids!');
+xlabel(these_figs.get_axes('bar'),'x axis');
+ylabel(these_figs.get_axes('bar'),'y axis');
+
+plot(other_figs.get_axes('fancy!'),x,x.^3,'r');
+plot(other_figs.get_axes('fancy!'),x,x.^2,'b');
+title(other_figs.get_axes('fancy!'),'Polynomials!')
+xlabel(other_figs.get_axes('fancy!'),'x axis');
+ylabel(other_figs.get_axes('fancy!'),'y axis');
+
+plot(other_figs.get_axes('yay formatting!'),x,sin((pi/10)*x),'k');
+plot(other_figs.get_axes('yay formatting!'),x,sin((3*pi/10)*x),'r');
+title(other_figs.get_axes('yay formatting!'),'Sinusoids!');
+xlabel(other_figs.get_axes('yay formatting!'),'x axis');
+ylabel(other_figs.get_axes('yay formatting!'),'y axis');
 
 % oh wait! I wanted another figure!
-FIGS.new('baz')
-plot(FIGS.get_axes('baz'),x,rand(1,length(x)),'k');
+these_figs.new('baz')
+plot(these_figs.get_axes('baz'),x,rand(1,length(x)),'k');
 
 % show a selection of figures
-FIGS.show('bar','baz')
+these_figs.show('bar','baz')
 
 % show all figures
-FIGS.show()
+these_figs.show()
+other_figs.show('fancy!','yay formatting!')
 % MATLAB will save invisible figures invisibly
-% this is not particularly useful, so make sure you show your figures before you
-% save them.
+% this is not particularly useful, so make sure you show your figures 
+% before you save them.
 
 % save baz and foo only as a .fig
-FIGS.save('./sample_figures','fig','baz','foo')
+these_figs.save('./sample_figures','fig','baz','foo')
 % save all as eps
-FIGS.save('./sample_figures','eps','baz','foo')
+these_figs.save('./sample_figures','eps')
 
 % uncomment to close some or all figures;
-%FIGS.close()
+%these_figs.close()
