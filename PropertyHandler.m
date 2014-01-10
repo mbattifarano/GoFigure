@@ -1,6 +1,6 @@
 classdef PropertyHandler < handle
-    %PROPERTYHANDLER Holds 
-    %   Detailed explanation goes here
+    %PROPERTYHANDLER Halds the figure and axes properties of a figure
+    %   
     properties
         figure
         axes
