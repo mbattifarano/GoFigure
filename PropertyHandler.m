@@ -20,16 +20,18 @@ classdef PropertyHandler < handle
             if nargin == 1
                 profile = prophandler.default_profile;
             end
+            this_file_path = mfilename('fullpath');
+            end_index = find(this_file_path=='/',1,'last');
+            module_root = this_file_path(1:end_index);
+            
             prophandler.readonly.figure = horzcat(fixed_props',...
                                            prophandler.readonly.figure);
-            props = load(['profiles/' profile '.mat']);
+            props = load([ module_root 'profiles/' profile '.mat']);
             prophandler.figure = rmfield(props.figure,...
                                    prophandler.readonly.figure);
             prophandler.axes   = rmfield(props.axes,...
                                    prophandler.readonly.axes);
-            
         end
     end
-    
 end
 
