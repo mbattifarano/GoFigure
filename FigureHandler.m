@@ -1,6 +1,7 @@
 classdef FigureHandler < handle
     properties
         figs
+        verbosity
     end
     properties (SetAccess = private)
         default_profile
@@ -13,12 +14,17 @@ classdef FigureHandler < handle
                 FH.default_profile = default_profile; 
             end
             FH.figs = Dictionary;
+            FH.verbosity = 0;
         end
         function new(obj,name,profile)
+            dbprint(obj.verbosity==1,'Creating new figure...')
             if nargin == 2
                 profile = obj.default_profile;
             end
-            obj.figs.set(name,cfigure(name,profile));
+            dbprint(obj.verbosity==1,'Creating cFigure object...');
+            f = cfigure(name,profile);
+            dbprint(obj.verbosity==1,'Adding cFigure to dictionary...');
+            obj.figs.set(name,f);
         end
         function map(obj,target_keys,fn,args)
             if isempty(target_keys)
@@ -26,7 +32,7 @@ classdef FigureHandler < handle
             end
             for i=1:length(target_keys)
                 h = obj.figs.get(target_keys{i});
-                %disp(obj.figs.keys{i});
+                dbprint(obj.verbosity==1,obj.figs.keys{i});
                 h.(fn)(args{:})
             end
         end
