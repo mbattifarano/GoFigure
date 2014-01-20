@@ -5,25 +5,35 @@ classdef cfigure
        name
        prop
        exists
+       verbosity
     end
     methods
         function fig_obj = cfigure(name,profile)
             if nargin == 1
                 profile  = 'default';
             end
+            fig_obj.verbosity = 0;
+            dbprint(fig_obj.verbosity==1,...
+                    'Generating initial figure settings...')
             fig_init     = struct('Visible'     , 'off' , ...
                                   'Name'        , name  , ...
                                   'NumberTitle' , 'off' );
             init_fields    = fieldnames(fig_init);
+            dbprint(fig_obj.verbosity==1,'Creating MATLAB figure...')
             fig_obj.Hfg    = figure(fig_init);
+            dbprint(fig_obj.verbosity==1,'Updating cFigure attibutes...')
             fig_obj.exists = true;
             fig_obj.Hax  = axes;
             fig_obj.name = name;
+            dbprint(fig_obj.verbosity==1,'Initializing PropertyHandler...')
             fig_obj.prop = PropertyHandler(init_fields,profile);
             
+            dbprint(fig_obj.verbosity==1,...
+                'Setting figure and axes handles...');
             set(fig_obj.Hfg,fig_obj.prop.figure);
             set(fig_obj.Hax,fig_obj.prop.axes);
-
+            
+            dbprint(fig_obj.verbosity==1,'Setting hold on...');
             hold on
         end
         function string = get_title(obj)
