@@ -7,6 +7,9 @@ Matt Battifarano
 GoFigure! is designed to handle MATLAB figures so that creating, 
 saving, and viewing is as simple and organized as possible.
 
+GoFigure! was developed with MATLAB R2013a on Ubuntu 12.04. I have NOT tested it
+on any other version of MATLAB under any other operating system.
+
 There are three class definitions:
 
   (1) cfigure 	      - Initializes an invisible figure and holds onto its  
