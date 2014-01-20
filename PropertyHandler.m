@@ -29,6 +29,9 @@ classdef PropertyHandler < handle
             props = load([ module_root 'profiles/' profile '.mat']);
             prophandler.figure = rmfield(props.figure,...
                                    prophandler.readonly.figure);
+            % If FigureHandler.new hangs it might be due to problems with X
+            % this line removes it from the propertyhandler
+            prophandler.figure = rmfield(prophandler.figure,'XDisplay');
             prophandler.axes   = rmfield(props.axes,...
                                    prophandler.readonly.axes);
         end
