@@ -32,7 +32,7 @@ classdef FigureHandler < handle
             end
             for i=1:length(target_keys)
                 h = obj.figs.get(target_keys{i});
-                dbprint(obj.verbosity==1,obj.figs.keys{i});
+                dbprint(obj.verbosity==1,obj.figs.get_Keys{i});
                 h.(fn)(args{:})
             end
         end
@@ -68,6 +68,7 @@ classdef FigureHandler < handle
             obj.map(varargin,'hide',{})
         end
         function save(obj,path,format,varargin)
+            obj.map(varargin,'show',{})
             obj.map(varargin,'save',{path,format});
         end
         function save_mult(obj,path,formats,varargin)
