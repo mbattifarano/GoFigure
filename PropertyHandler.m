@@ -31,7 +31,9 @@ classdef PropertyHandler < handle
                                    prophandler.readonly.figure);
             % If FigureHandler.new hangs it might be due to problems with X
             % this line removes it from the propertyhandler
+            if isfield(prophandler.figure,'XDisplay')
             prophandler.figure = rmfield(prophandler.figure,'XDisplay');
+            end
             prophandler.axes   = rmfield(props.axes,...
                                    prophandler.readonly.axes);
         end
