@@ -9,10 +9,11 @@ classdef cfigure
     end
     methods
         function fig_obj = cfigure(name,profile)
+            global VERBOSE;
             if nargin == 1
                 profile  = 'default';
             end
-            fig_obj.verbosity = 0;
+            fig_obj.verbosity = VERBOSE;
             dbprint(fig_obj.verbosity==1,...
                     'Generating initial figure settings...')
             fig_init     = struct('Visible'     , 'off' , ...
@@ -36,22 +37,50 @@ classdef cfigure
             dbprint(fig_obj.verbosity==1,'Setting hold on...');
             hold on
         end
-        function string = get_title(obj)
-            string = get(get(obj.Hax,'title'),'string');
+        function string = as_filename(obj,string)
             string = strrep(string,' ','-');
             string = strrep(string,'\','');
             string = strrep(string,'.','-');
         end
-        function save(obj,path,format)
-            title_string = obj.get_title;
-            if isempty(title_string)
-                title_string = [obj.name ' - untitled'];
+        function string = get_title(obj)
+            try
+            string = get(get(obj.Hax,'title'),'string');
+            string = obj.as_filename(string);
+            catch
+                string = '_';
             end
-            saveas(obj.Hfg,[ path '/' title_string '.' format],format);
+        end
+        function save_(obj,path,format)
+            title_string = obj.get_title;
+            filename = [ path '/' obj.as_filename(obj.name) '-' title_string ];
+            dbprint(obj.verbosity==1,...
+                ['Saving ' filename]);
+            switch format
+                case 'fig'
+                    saveas(obj.Hfg,filename,format);
+                case 'pdf'
+                    % fix so that pdf contains whole figure;
+                    set(obj.Hfg,'Units','Inches');
+                    pos = get(obj.Hfg,'Position');
+                    set(h,'PaperPositionMode','Auto',...
+                          'PaperUnits','Inches',...
+                          'PaperSize',[pos(3), pos(4)]);
+                    
+                    print(obj.Hfg,filename,'-dpdf','-r0');
+                otherwise
+                print(obj.Hfg,['-d' format],filename);
+            end
         end
         function save_mult(obj,path,formats)
             for i=1:length(formats)
-                obj.save(path,formats{i});
+                obj.save_(path,formats{i});
+            end
+        end
+        function save(obj,path,formats)
+            if iscell(formats)
+                obj.save_mult(path,formats);
+            else
+                obj.save_(path,formats)
             end
         end
         function show(obj)
