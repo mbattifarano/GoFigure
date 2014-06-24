@@ -8,18 +8,22 @@ classdef FigureHandler < handle
     end
     methods
         function FH = FigureHandler(default_profile)
+            global VERBOSE;
             if nargin == 0
                 FH.default_profile = 'default';
             else
                 FH.default_profile = default_profile; 
             end
             FH.figs = Dictionary;
-            FH.verbosity = 0;
+            FH.verbosity = VERBOSE;
         end
         function new(obj,name,profile)
             dbprint(obj.verbosity==1,'Creating new figure...')
             if nargin == 2
                 profile = obj.default_profile;
+            end
+            if strcmp(name,obj.figs.get_Keys)
+                obj.close(name);
             end
             dbprint(obj.verbosity==1,'Creating cFigure object...');
             f = cfigure(name,profile);
@@ -71,9 +75,9 @@ classdef FigureHandler < handle
             obj.map(varargin,'show',{})
             obj.map(varargin,'save',{path,format});
         end
-        function save_mult(obj,path,formats,varargin)
-            obj.map(varargin,'save_mult',{path,formats});
-        end
+%         function save_mult(obj,path,formats,varargin)
+%             obj.map(varargin,'save_mult',{path,formats});
+%         end
         function close(obj,varargin)
             obj.map(varargin,'close',{})
             obj.figs.clear(varargin);
