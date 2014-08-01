@@ -44,17 +44,23 @@ classdef cfigure
         end
         function string = get_title(obj)
             try
-            string = get(get(obj.Hax,'title'),'string');
-            string = obj.as_filename(string);
+                string = get(get(obj.Hax,'title'),'string');
+                string = obj.as_filename(string);
             catch
-                string = '_';
+                string = '';
             end
         end
         function save_(obj,path,format)
             title_string = obj.get_title;
-            filename = [ path '/' obj.as_filename(obj.name) '-' title_string ];
+            if iscell(title_string)
+                title_string = title_string{1};
+            end
+            if ~isempty(title_string)
+                title_string = ['-' title_string];
+            end
+            filename = [ path '/' obj.as_filename(obj.name) title_string ];
             dbprint(obj.verbosity==1,...
-                ['Saving ' filename]);
+                ['Saving ' filename '.' format]);
             switch format
                 case 'fig'
                     saveas(obj.Hfg,filename,format);
@@ -62,9 +68,9 @@ classdef cfigure
                     % fix so that pdf contains whole figure;
                     set(obj.Hfg,'Units','Inches');
                     pos = get(obj.Hfg,'Position');
-                    set(h,'PaperPositionMode','Auto',...
-                          'PaperUnits','Inches',...
-                          'PaperSize',[pos(3), pos(4)]);
+                    set(obj.Hfg,'PaperPositionMode','Auto',...
+                                'PaperUnits','Inches',...
+                                'PaperSize',[pos(3), pos(4)]);
                     
                     print(obj.Hfg,filename,'-dpdf','-r0');
                 otherwise
